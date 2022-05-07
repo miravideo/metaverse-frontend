@@ -7,17 +7,17 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn serve
+yarn dev:weapp
 ```
 
 ### Compiles and minifies for production
 ```
-yarn build
+yarn build:weapp
 ```
 
-### Lints and fixes files
+### Compression and previewing, but the compilation speed will decrease.
 ```
-yarn lint
+NODE_ENV=production taro build --type weapp --watch # Mac
 ```
 
 ### Customize configuration
