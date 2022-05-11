@@ -11,16 +11,6 @@
         </b-input-group>
       </b-row>
       <br>
-      <!--      <b-row>-->
-      <!--        <b-input-group size="sm" class="mb-2">-->
-      <!--          <b-input-group-prepend is-text>-->
-      <!--            <b-icon icon="diamond"></b-icon>-->
-      <!--            字幕/旁白-->
-      <!--          </b-input-group-prepend>-->
-      <!--          <b-form-input v-model="drama" placeholder="请输入你想展示的字幕"></b-form-input>-->
-      <!--        </b-input-group>-->
-      <!--      </b-row>-->
-      <!--      <br>-->
       <br>
     </b-col>
 
@@ -53,7 +43,6 @@
         video{{ index }}
         <b-img :src="value" fluid alt="Fluid image" v-on:click="selectVideo(index)"></b-img>
 
-        <!--        <b-row>-->
         <br>
         <b-input-group size="sm" class="mb-2" v-show="activeClass == index">
           <b-input-group-prepend is-text>
@@ -68,8 +57,6 @@
 
           </b-col>
         </b-input-group>
-        <!--        </b-row>-->
-        <!--        <br>-->
 
       </b-list-group-item>
     </b-list-group>
@@ -77,13 +64,18 @@
     <br>
 
 
-    <a :href="resVideo">{{resVideo}}</a>
     <div class="circles-video" v-if="showVideo">
-<!--      <span v-html="videoSource"></span>-->
-      <!--      <video id="video" :src=resVideo controls autoplay width="300" height="300" :style="[dispalyVideo]">-->
+      <b-alert show variant="success">
+        <p>
+          视频正在合成，可能需要一两分钟，稍等，也可以先保存下列即将生成的视频链接
+          <a :href="resVideo">视频链接</a>
+        </p>
+      </b-alert>
       <video id="video"
              :src=resVideo
-             controls autoplay width="300" height="300">
+             :key=resVideo
+             controls
+             width="300" height="300">
       </video>
     </div>
 
@@ -114,17 +106,18 @@ export default {
       pendingVideo: [],
       resVideo: null,
       showVideo: false,
+      videoLoaded: false,
       // dispalyVideo: {opacity: '0'},
     };
   },
+  watch: {
+    currentSrc() {
+      this.$nextTick(() => {
+        this.showVideo = true
+      })
+    },
+  },
   // watch: {
-  //   currentSrc() {
-  //     this.$nextTick(() => {
-  //       this.showVideo = true
-  //     })
-  //   },
-  // },
-    // watch: {
   //   resVideo(newV, oldV){
   //     console.log("123321", newV, oldV)
   //     // console.log(this.resVideo)
@@ -132,26 +125,28 @@ export default {
   //     // console.log('data change to %d', newV);
   //   }
   // },
-  // computed: {
-  //   // 计算属性的 getter
-  //   videoSource: function () {
-  //     return `<video controls autoplay width="360" height="640"><source src="${this.resVideo}" type="video/mp4"></video>`;
-  //   }
-  // },
   methods: {
-    getVideoData(video_id) {
-      var video = document.getElementById("video" + video_id);
-      video.src = this.video_urls[video_id]
-      video.play()
-      video.startTime = this.start_time[video_id]
-      video.ondurationchange = function () {
-        console.log("currentTime:", video.currentTime)
-      }
-      video.addEventListener('pause', function (e) {
-        console.log('暂停播放')
-        console.log(e)
-        console.log("暂停时间:", video.currentTime)
-      })
+    loadVideo() {
+      console.log("hello")
+      let timer = setInterval(() => {
+        this.getVideoData(timer)
+      }, 5000);
+    },
+
+
+    getVideoData(timer) {
+      var oMedia = document.getElementById("video");
+      oMedia.load()
+      let flag = false
+      oMedia.addEventListener("loadedmetadata", function () {
+        this.videoLoaded = true
+        flag = true
+        if (flag == true) {
+          clearInterval(timer)
+          oMedia.play()
+        }
+      });
+
     },
     mergedramas() {
       this.words.push(this.drama1)
@@ -164,6 +159,7 @@ export default {
       this.clearData()
       this.processVideo()
       this.showVideo = true
+      this.loadVideo()
       // this.dispalyVideo.opacity = '1'
     },
     addSelectedVideo() {
@@ -251,6 +247,7 @@ export default {
       let data = JSON.stringify(this.pendingVideo).toString();
       let str_data = '{"video": ' + data + '}'
       let requests_data = JSON.parse(str_data)
+      console.log(requests_data)
       axios.post(url, requests_data, {headers: {'Content-Type': 'application/json'}})
           .then(response => {
             this.resVideo = response.data
