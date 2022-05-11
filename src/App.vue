@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/demo.png">
+    <h3>说明文档在这里:<a href="https://meowing-staircase-143.notion.site/v0-1-0-a135cc8e8e6046ef9e849a55d0ebaff7">Doc</a></h3>
     <hr>
-    <Main />
+    <img alt="Vue logo" src="./assets/demo.png">
+    <Main/>
   </div>
 </template>
 
