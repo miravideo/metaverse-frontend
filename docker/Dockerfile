@@ -29,5 +29,5 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy from the stahg 1
 COPY --from=node-builder /metaverse-frontend/dist /usr/share/nginx/html
 
-EXPOSE 8080
+EXPOSE 8081
 CMD ["nginx", "-g", "daemon off;"]

@@ -10,10 +10,8 @@
           <b-form-input v-model="sentence" placeholder="请输入你想搜索的场景"></b-form-input>
         </b-input-group>
       </b-row>
-      <br>
-      <br>
     </b-col>
-
+    <hr>
     <b-col>
       <b-row>
         <b-button pill variant="primary" v-on:click="getSearchData()">点击搜索
@@ -21,17 +19,16 @@
         </b-button>
       </b-row>
     </b-col>
-    <br>
-
+    <hr>
     <b-col align-self="end">
       <b-row>
         <b-button pill variant="secondary" v-on:click="nextVideo()">下一幕
           <b-icon icon="arrow-right"></b-icon>
         </b-button>
       </b-row>
-      <br>
+      <hr>
       <b-row>
-        <b-button pill variant="success" v-on:click="mergeVideo()">最终提交
+        <b-button pill variant="success" v-on:click="mergeVideo()">生成视频
           <b-icon icon="check"></b-icon>
         </b-button>
       </b-row>

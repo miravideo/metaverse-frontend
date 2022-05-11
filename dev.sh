@@ -1,5 +1,5 @@
 TAG=${1:-latest}
 
 docker run --rm -it \
-    -p 8080:8080 \
+    -p 1989:8081 \
      metaverse-frontend:$TAG
