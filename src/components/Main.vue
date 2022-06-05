@@ -210,12 +210,14 @@ export default {
           .then(response => {
             let all_data = response.data.result
             for (var i = 0; i < num_output; i++) {
-              let start_time = all_data[i][1]
-              let response_url = all_data[i][3][0]
+              let start_time = all_data[i]['seconds']
+              let response_url = all_data[i]['video_url']
+              let thumbnail = all_data[i]['thumbnail']
               start.push(start_time)
               metavideo.push(response_url)
               videos.push(response_url + "#t=" + start_time)
-              previews.push(response_url + "?ci-process=snapshot&time=" + start_time + "&format=jpg")
+              // previews.push(response_url + "?ci-process=snapshot&time=" + start_time + "&format=jpg")
+              previews.push(thumbnail)
             }
             // console.log(videos)
             // console.log(previews)
