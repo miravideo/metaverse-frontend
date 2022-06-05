@@ -91,7 +91,7 @@ export default {
       drama3: "",
       words: [],
       sentence: '一群学生在上课',
-      collection_id: "panda_metaverse_video",
+      collection_id: "m100_tv_movie",
       collection_ids: ["panda_metaverse_video", "shuyi_test_panda_crawl_0", "coper_demo"],
       metavideos: [],
       video_urls: [],
@@ -124,7 +124,6 @@ export default {
   // },
   methods: {
     loadVideo() {
-      console.log("hello")
       let timer = setInterval(() => {
         this.getVideoData(timer)
       }, 5000);
